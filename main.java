@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class main{
@@ -11,7 +13,7 @@ public class main{
         System.out.println(cadena);
         
     }
-    
+    lector.close();
 }
 
 class Token{ //creamos clase Token con dos variables privadas, etiqueta y valor
@@ -29,4 +31,31 @@ class Token{ //creamos clase Token con dos variables privadas, etiqueta y valor
     public String getValor(){//obtenermos el dato de valor
         return valor;//devolvemos el dato valor
     }
+}
+
+class A_lex{
+    private String entrada;
+
+    public A_lex(String entrada){
+        this.entrada = entrada; //creamos la propiedad y asignamos el valor entrada
+    }
+
+    public List<Token> ListaToken(){
+        List<Token> tokens = new ArrayList<>();
+
+        String[] cadena = entrada.split(" "); //dividmos la entrada en palabras y se añaden al arreglo
+        for (String palabra : cadena){//recorremos todos los elementos del arreglo palabra para compararlos y etiquetarlos
+            if (palabra.matches("[a-zA-Z_][a-zA-Z0-9_]*"))//definimos una expresión regular la cual indica como puede comenzar la cadena de entrada, "*" indica cero o mas veces
+                tokens.add(new Token("Identificador", palabra));
+            } 
+            if (palabra.matches("[0-9]+")){//expresion regular para etiquetar los numeros del 0 al 9 el "+" es para indicar "uno o más"
+                tokens.add(new Token("Int", palabra));
+            } 
+            else if (palabra.matches("[+\\-*/=]")){
+                tokens.add(new Token("Operador", palabra));
+            }
+
+    }
+
+    return tokens;
 }
